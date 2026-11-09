@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Xuân Quê hương 2027, moodboard, ấn phẩm và không gian 3D</title>
+  <meta name="description" content="Moodboard, ấn phẩm truyền thông và không gian 3D của chương trình Xuân Quê hương Đinh Mùi 2027, dự án của nhóm thực tập sinh.">
+  <link rel="preload" href="assets/fonts/EBGaramondVN-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/EBGaramondVN-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/Fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css?v=10">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./assets/vendor/three/three.module.js",
+      "three/addons/": "./assets/vendor/three/addons/"
+    }
+  }
+  </script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#/" aria-label="Về trang mở đầu">Xuân Quê hương <span>2027</span></a>
+  <nav class="stepper" id="stepper" aria-label="Các phần của bài trình bày">
+    <a href="#/" data-step="0"><i>1</i>Mở đầu</a>
+    <a href="#/moodboard" data-step="1"><i>2</i>Moodboard</a>
+    <a href="#/khong-gian" data-step="2"><i>3</i>Không gian 3D</a>
+    <a href="#/cam-on" data-step="3"><i>4</i>Cảm ơn</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="view view-home" id="view-home" data-route="/">
+    <div class="hero" id="hero">
+      <div class="hero-grid">
+        <div class="hero-main">
+          <div class="hero-copy">
+            <p class="hero-org" id="heroOrg"></p>
+            <h1>Hình ảnh<br>truyền thông</h1>
+            <p class="hero-event" id="heroEvent"></p>
+            <p class="hero-credit" id="heroCredit"></p>
+          </div>
+          <div class="hero-actions">
+            <a class="btn btn-gold" href="#/moodboard" id="heroBtn">Bắt đầu xem</a>
+          </div>
+        </div>
+        <figure class="hero-art" id="heroArt" hidden><div class="poster-frame"><img id="heroArtImg" alt="Poster chương trình Xuân Quê hương Đinh Mùi 2027"></div></figure>
+      </div>
+      <div class="fans" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section class="view view-mood" id="view-moodboard" data-route="/moodboard">
+    <div class="page page-wide">
+      <h2 id="mTitle"></h2>
+      <p class="lead" id="mLead"></p>
+      <div class="mood-layout">
+        <nav class="toc" id="toc" aria-label="Mục lục trang Moodboard"></nav>
+        <div class="mood-body" id="moodBody"></div>
+      </div>
+      <div class="pager">
+        <a class="btn btn-line" href="#/">Quay lại mở đầu</a>
+        <a class="btn btn-red" href="#/khong-gian">Tiếp tục tới không gian 3D</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="view view-space" id="view-space" data-route="/khong-gian">
+    <div class="space" id="space">
+      <div class="space-canvas" id="spaceCanvas"></div>
+      <div class="hotspots" id="hotspots"></div>
+      <p class="space-loading" id="spaceLoading">Đang dựng không gian</p>
+
+      <div class="space-bar space-views" id="viewButtons" role="group" aria-label="Góc nhìn"></div>
+      <div class="space-bar space-tools" role="group" aria-label="Công cụ">
+        <div class="seg" id="modeSeg">
+          <button type="button" data-mode="orbit" class="on">Xoay quanh</button>
+          <button type="button" data-mode="walk">Đi bộ</button>
+        </div>
+        <div class="seg" id="timeSeg">
+          <button type="button" data-time="dusk" class="on">Buổi tối</button>
+          <button type="button" data-time="day">Ban ngày</button>
+        </div>
+        <button type="button" class="tool tool-party" id="confettiBtn">Bắn pháo hoa giấy</button>
+        <button type="button" class="tool" id="tourBtn">Tham quan tự động</button>
+      </div>
+
+      <aside class="legend" id="legend">
+        <button type="button" class="legend-toggle" id="legendToggle" aria-expanded="true">Các khu trong sân</button>
+        <ol id="legendList"></ol>
+      </aside>
+
+      <aside class="panel" id="panel" hidden>
+        <button type="button" class="panel-close" id="panelClose" aria-label="Đóng">Đóng</button>
+        <p class="panel-no" id="panelNo"></p>
+        <h3 id="panelName"></h3>
+        <p id="panelDesc"></p>
+        <p class="panel-plan" id="panelPlan"></p>
+        <div class="panel-nav">
+          <button type="button" class="btn btn-line" id="panelPrev">Khu trước</button>
+          <button type="button" class="btn btn-line" id="panelNext">Khu sau</button>
+        </div>
+      </aside>
+
+      <div class="joy" id="joy" hidden><i id="joyKnob"></i></div>
+      <button type="button" class="held-chip" id="heldChip" hidden>Đang cầm brochure. Bấm để xem</button>
+      <p class="space-hint" id="spaceHint">Kéo để xoay, cuộn để phóng to, giữ chuột phải để di chuyển. Bấm Đi bộ rồi dùng phím W A S D hoặc bấm vào sàn để đi tới đó.</p>
+    </div>
+    <div class="space-foot">
+      <a class="btn btn-line" href="#/moodboard">Quay lại Moodboard</a>
+      <a class="btn btn-red" href="#/cam-on" id="endBtn">Kết thúc</a>
+    </div>
+  </section>
+
+  <section class="view view-thanks" id="view-thanks" data-route="/cam-on">
+    <div class="hero thanks">
+      <div class="thanks-card">
+        <p class="hero-org" id="thOrg"></p>
+        <h2 id="thTitle"></h2>
+        <p class="thanks-msg" id="thMsg"></p>
+        <p class="thanks-sign" id="thSign"></p>
+        <div class="thanks-actions">
+          <a class="btn btn-ghost" href="#/">Xem lại từ đầu</a>
+          <a class="btn btn-ghost" href="../">Về portfolio</a>
+          <a class="btn btn-ghost" href="#/khong-gian">Quay lại không gian 3D</a>
+        </div>
+      </div>
+      <div class="fans" aria-hidden="true"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="sitefoot"><span id="siteFoot"></span></footer>
+
+<dialog class="lightbox" id="lightbox">
+  <button type="button" id="lightboxClose" aria-label="Đóng ảnh">Đóng</button>
+  <button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="Ảnh trước">&lsaquo;</button>
+  <img id="lightboxImg" alt="">
+  <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="Ảnh sau">&rsaquo;</button>
+  <p id="lightboxCap"></p>
+  <span class="lb-count" id="lbCount"></span>
+</dialog>
+
+<dialog class="locdlg" id="locDlg">
+  <div class="loc-card" id="locCard" data-pos="middle">
+    <div class="loc-glow" aria-hidden="true"></div>
+    <div class="loc-sparks" id="locSparks" aria-hidden="true"></div>
+    <button type="button" class="loc-x" id="locClose" aria-label="Đóng">Đóng</button>
+    <div class="loc-face">
+      <img class="loc-img" id="locImg" alt="">
+      <div class="loc-over">
+        <div class="loc-env" id="locEnv"><i></i></div>
+        <p class="loc-title" id="locTitle"></p>
+        <p class="loc-msg" id="locMsg"></p>
+      </div>
+    </div>
+    <button type="button" class="btn btn-gold" id="locAgain">Hái thêm một lộc</button>
+  </div>
+</dialog>
+
+<dialog class="lightbox bro" id="broDlg">
+  <button type="button" id="broClose" aria-label="Đóng">Đóng</button>
+  <div class="bro-stage" id="broStage" role="img" aria-label="Brochure gấp ba">
+    <div class="bf-flip" id="broFlip"><div class="bf-sheet">
+      <div class="bf-p bf-a"><i class="ff"></i><i class="fk"></i>
+        <div class="bf-p bf-b"><i class="ff"></i><i class="fk"></i>
+          <div class="bf-p bf-c"><i class="ff"></i><i class="fk"></i></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+  <p id="broLabel"></p>
+  <div class="bro-actions">
+    <button type="button" class="btn btn-line" id="broFold">Gập lại</button>
+    <button type="button" class="btn btn-line" id="broTurn">Lật sang mặt kia</button>
+    <button type="button" class="btn btn-gold" id="broTake">Cầm theo brochure</button>
+  </div>
+  <p class="bro-note" id="broNote"></p>
+</dialog>
+
+<script type="module" src="js/app.js?v=10"></script>
+</body>
+</html>
